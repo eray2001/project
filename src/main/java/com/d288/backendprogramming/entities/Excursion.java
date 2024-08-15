@@ -1,9 +1,10 @@
 package com.d288.backendprogramming.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -21,6 +22,7 @@ public class Excursion {
     private Long id;
 
     @Column(name = "create_date")
+    @CreationTimestamp
     private Date create_date;
 
     @Column(name = "excursion_price")
@@ -33,6 +35,7 @@ public class Excursion {
     private String image_URL;
 
     @Column(name = "last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @ManyToMany(mappedBy = "excursions")
