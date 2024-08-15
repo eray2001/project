@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
 import java.util.Set;
@@ -23,6 +25,7 @@ public class Customer {
     private String address;
 
     @Column(name = "create_date")
+    @CreationTimestamp
     private Date create_date;
 
     @Column(name = "customer_first_name")
@@ -32,6 +35,7 @@ public class Customer {
     private String lastName;
 
     @Column(name = "last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @Column(name = "phone")

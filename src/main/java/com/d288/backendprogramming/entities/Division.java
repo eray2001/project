@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.sql.Date;
 import java.util.Set;
@@ -14,18 +16,21 @@ import java.util.Set;
 @Setter
 public class Division {
 
+
+    @Column(name = "division")
+    private String division_name;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "division_id")
     private Long id;
 
-    @Column(name = "division")
-    private String division_name;
-
     @Column(name = "create_date")
+    @CreationTimestamp
     private Date create_date;
 
     @Column(name = "last_update")
+    @UpdateTimestamp
     private Date last_update;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -34,4 +39,13 @@ public class Division {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "division")
     private Set<Customer> customers;
+
+    @Column(name = "country_id")
+    private Long country_id;
+
+    public void setCountry(Country country){
+        setCountry_id(country.getId());
+        this.country = country;
+    }
+
 }

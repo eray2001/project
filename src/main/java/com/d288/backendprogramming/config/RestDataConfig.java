@@ -1,5 +1,6 @@
 package com.d288.backendprogramming.config;
 
+
 import com.d288.backendprogramming.entities.*;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
