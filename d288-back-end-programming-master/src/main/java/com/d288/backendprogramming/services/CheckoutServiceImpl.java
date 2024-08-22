@@ -30,8 +30,8 @@ public class CheckoutServiceImpl implements CheckoutService{
     public PurchaseResponse placeOrder(Purchase purchase) {
         Cart cart = purchase.getCart();
 
-        String cartTrackingNumber = generateCartTrackingNumber();
-        cart.setOrderTrackingNumber(cartTrackingNumber);
+        String orderTrackingNumber = generateCartTrackingNumber();
+        cart.setOrderTrackingNumber(orderTrackingNumber);
 
         Set<CartItem> cartItems = purchase.getCartItems();
         cartItems.forEach(item -> cart.add(item));
@@ -47,7 +47,14 @@ public class CheckoutServiceImpl implements CheckoutService{
 
         cart.setStatus(STATUSTYPE.ordered);
 
-        return new PurchaseResponse(cartTrackingNumber);
+        if(cart != null) {
+            return new PurchaseResponse(orderTrackingNumber);
+        }
+        else {
+            orderTrackingNumber = "cart is empty";
+            return new PurchaseResponse(orderTrackingNumber);
+        }
+
     }
 
     private String generateCartTrackingNumber() {
