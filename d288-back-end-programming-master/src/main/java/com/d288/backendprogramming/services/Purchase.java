@@ -4,7 +4,6 @@ import com.d288.backendprogramming.entities.Cart;
 import com.d288.backendprogramming.entities.CartItem;
 import com.d288.backendprogramming.entities.Customer;
 import lombok.Data;
-import org.hibernate.query.Order;
 
 import java.util.Set;
 

@@ -4,6 +4,6 @@ package com.d288.backendprogramming.entities;
 
 
 
-public enum STATUSTYPE {
+public enum StatusType {
     pending, ordered, canceled;
 }

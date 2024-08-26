@@ -5,10 +5,9 @@ import com.d288.backendprogramming.dao.CustomerRepo;
 import com.d288.backendprogramming.entities.Cart;
 import com.d288.backendprogramming.entities.CartItem;
 import com.d288.backendprogramming.entities.Customer;
-import com.d288.backendprogramming.entities.STATUSTYPE;
+import com.d288.backendprogramming.entities.StatusType;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,11 +29,11 @@ public class CheckoutServiceImpl implements CheckoutService{
     public PurchaseResponse placeOrder(Purchase purchase) {
         Cart cart = purchase.getCart();
 
-        String orderTrackingNumber = generateCartTrackingNumber();
+        String orderTrackingNumber = generateOrderTrackingNumber();
         cart.setOrderTrackingNumber(orderTrackingNumber);
 
         Set<CartItem> cartItems = purchase.getCartItems();
-        cartItems.forEach(item -> cart.add(item));
+        cartItems.forEach(cart::add);
 
         cart.setCartItem(purchase.getCartItems());
         cart.setCustomer(purchase.getCustomer());
@@ -42,22 +41,18 @@ public class CheckoutServiceImpl implements CheckoutService{
         Customer customer = purchase.getCustomer();
         customer.add(cart);
 
+        cart.setStatus(StatusType.ordered);
+
         cartRepo.save(cart);
         customerRepo.save(customer);
 
-        cart.setStatus(STATUSTYPE.ordered);
+            return new PurchaseResponse(orderTrackingNumber);
 
-        if(cart != null) {
-            return new PurchaseResponse(orderTrackingNumber);
-        }
-        else {
-            orderTrackingNumber = "cart is empty";
-            return new PurchaseResponse(orderTrackingNumber);
-        }
+
 
     }
 
-    private String generateCartTrackingNumber() {
+    private String generateOrderTrackingNumber() {
         return UUID.randomUUID().toString();
     }
 

@@ -1,7 +1,7 @@
 package com.d288.backendprogramming.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
@@ -24,9 +24,6 @@ public class Cart {
     @Column(name = "cart_id")
     private Long id;
 
-    @Column(name = "order_tracking_number")
-    private String orderTrackingNumber;
-
     @Column(name = "package_price")
     private BigDecimal package_price;
 
@@ -35,7 +32,10 @@ public class Cart {
 
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
-    private STATUSTYPE status;
+    private StatusType status;
+
+    @Column(name = "order_tracking_number", nullable = false)
+    private String orderTrackingNumber;
 
     @Column(name = "create_date")
     @CreationTimestamp
@@ -46,7 +46,7 @@ public class Cart {
     private Date last_update;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
+    @JoinColumn(name = "customer_id",nullable = false)
     private Customer customer;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cart")
