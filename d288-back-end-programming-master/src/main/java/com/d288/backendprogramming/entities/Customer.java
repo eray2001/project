@@ -50,7 +50,7 @@ public class Customer {
     private Division division;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
-    private Set<Cart> carts = new HashSet<>();
+    private Set<Cart> carts;
 
     public void add(Cart cart) {
 
